@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DREAM BIG — A Father & Mentor's Guide to Life After High School | Corey L. Cook</title>
+<meta name="description" content="The practical, no-nonsense guide to life after high school built on lived experience. By Corey L. Cook.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#C9A227;--gold-bright:#D4AF37;--gold-pale:#F0DFA0;
+  --purple:#3D1F5C;--purple-deep:#27133B;--purple-mid:#5A3580;
+  --cream:#FAF7F0;--warm-white:#FFFDF8;
+  --ink:#1A1A1A;--text:#3A3530;--muted:#8A857D;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',sans-serif;color:var(--text);background:var(--warm-white);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+
+/* === NAV === */
+.site-nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  padding:18px 40px;
+  background:transparent;
+  transition:all .35s ease;
+}
+.site-nav.scrolled{
+  background:rgba(39,19,59,.97);
+  box-shadow:0 2px 24px rgba(0,0,0,.25);
+  padding:12px 40px;
+}
+.nav-inner{
+  max-width:1240px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{
+  font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;
+  color:var(--gold);text-decoration:none;letter-spacing:.02em;
+}
+.nav-links{display:flex;align-items:center;gap:28px;list-style:none}
+.nav-links a{
+  font-size:.82rem;font-weight:600;color:rgba(255,255,255,.7);
+  text-decoration:none;letter-spacing:.02em;transition:color .2s;
+}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{
+  padding:10px 22px;background:var(--gold);color:var(--purple-deep)!important;
+  border-radius:5px;font-weight:700!important;font-size:.82rem!important;
+  opacity:1!important;transition:all .25s;
+}
+.nav-cta:hover{background:var(--gold-bright);transform:translateY(-1px)}
+.hamburger{
+  display:none;flex-direction:column;cursor:pointer;gap:5px;
+  background:none;border:none;padding:4px;
+}
+.hamburger span{
+  width:24px;height:2.5px;background:rgba(255,255,255,.8);border-radius:2px;
+  transition:all .3s ease;display:block;
+}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+/* === HERO === */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  background:var(--purple-deep);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 75% 20%, rgba(201,162,39,0.07) 0%, transparent 100%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(90,53,128,0.15) 0%, transparent 100%);
+  pointer-events:none;
+}
+.hero-grid{
+  max-width:1520px;width:100%;margin:0 auto;padding:120px 40px 80px;
+  display:grid;grid-template-columns:1fr 700px;gap:56px;align-items:center;
+  position:relative;z-index:2;
+}
+.hero-eyebrow{
+  font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:24px;
+  opacity:0;animation:rise .7s ease .2s forwards;
+}
+.hero h1{
+  font-family:'Cormorant Garamond',serif;font-weight:700;
+  font-size:clamp(3.2rem,5.5vw,5.4rem);line-height:.95;
+  color:#fff;margin-bottom:14px;
+  opacity:0;animation:rise .7s ease .35s forwards;
+}
+.hero h1 em{
+  font-style:italic;
+  background:linear-gradient(135deg,var(--gold) 20%,var(--gold-pale) 80%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{
+  font-family:'Cormorant Garamond',serif;font-size:clamp(1.15rem,1.8vw,1.45rem);
+  font-weight:600;color:rgba(255,255,255,.85);line-height:1.4;margin-bottom:36px;
+  opacity:0;animation:rise .7s ease .5s forwards;
+}
+.hero-body{
+  font-size:1rem;line-height:1.8;color:rgba(255,255,255,.6);max-width:500px;margin-bottom:44px;
+  opacity:0;animation:rise .7s ease .65s forwards;
+}
+.btn-gold{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:17px 38px;border:none;border-radius:6px;cursor:pointer;
+  background:var(--gold);color:var(--purple-deep);
+  font-family:'Manrope',sans-serif;font-size:.95rem;font-weight:700;
+  letter-spacing:.03em;text-decoration:none;
+  box-shadow:0 4px 24px rgba(201,162,39,.3);
+  transition:all .25s ease;
+  opacity:0;animation:rise .7s ease .8s forwards;
+}
+.btn-gold:hover{background:var(--gold-bright);transform:translateY(-2px);box-shadow:0 8px 32px rgba(201,162,39,.45)}
+.btn-gold svg{width:16px;height:16px;fill:currentColor}
+/* Book visual */
+.hero-book{
+  display:flex;justify-content:center;
+  opacity:0;animation:rise .8s ease .5s forwards;
+}
+.book-cover{
+  width:680px;position:relative;
+  border-radius:3px 12px 12px 3px;
+  box-shadow:-16px 24px 64px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.05);
+  transform:perspective(600px) rotateY(-6deg);transition:transform .5s ease;
+  overflow:hidden;
+}
+.book-cover:hover{transform:perspective(600px) rotateY(-2deg)}
+.book-cover::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:16px;z-index:2;
+  background:linear-gradient(90deg,rgba(138,110,24,.6),rgba(201,162,39,.3),transparent);
+  border-radius:3px 0 0 3px;
+}
+.book-cover img{
+  width:100%;height:auto;display:block;border-radius:3px 12px 12px 3px;
+}
+
+/* === QUOTE BANNER === */
+.quote-banner{
+  padding:80px 40px;background:var(--cream);text-align:center;
+  border-bottom:1px solid rgba(0,0,0,.05);
+}
+.quote-banner blockquote{
+  max-width:720px;margin:0 auto;
+  font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,2.8vw,2rem);
+  font-weight:600;font-style:italic;line-height:1.55;color:var(--purple);
+}
+.quote-banner cite{
+  display:block;margin-top:20px;font-family:'Manrope',sans-serif;
+  font-size:.85rem;font-style:normal;font-weight:600;color:var(--muted);letter-spacing:.04em;
+}
+
+/* === SECTION HELPERS === */
+.sec-eyebrow{
+  font-size:.7rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);text-align:center;margin-bottom:10px;
+}
+.sec-title{
+  font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.8vw,3rem);font-weight:700;
+  text-align:center;color:var(--purple-deep);margin-bottom:56px;line-height:1.15;
+}
+
+/* === FRAMEWORK === */
+.framework{padding:100px 40px;background:var(--warm-white)}
+.framework-inner{max-width:1000px;margin:0 auto}
+.fw-grid{display:grid;grid-template-columns:1fr;gap:16px;max-width:700px;margin:0 auto}
+.fw-card{
+  display:flex;align-items:flex-start;gap:18px;
+  padding:26px 28px;border-radius:12px;background:var(--cream);
+  border:1px solid transparent;transition:all .25s ease;
+}
+.fw-card:hover{border-color:rgba(201,162,39,.25);box-shadow:0 6px 20px rgba(0,0,0,.04);transform:translateY(-2px)}
+.fw-letter{
+  font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;
+  color:var(--gold);line-height:1;min-width:40px;
+}
+.fw-card h3{font-size:.95rem;font-weight:700;color:var(--purple-deep);margin-bottom:4px}
+.fw-card p{font-size:.87rem;color:var(--muted);line-height:1.6}
+
+/* === STORY === */
+.story{
+  padding:100px 40px;color:#fff;
+  position:relative;overflow:hidden;
+  background:var(--purple-deep);
+}
+.story-bg{
+  position:absolute;inset:0;
+  background:url('DJI_0404.jpg') center/cover no-repeat;
+  opacity:.15;
+  filter:saturate(.6);
+}
+.story-inner{max-width:760px;margin:0 auto;position:relative;z-index:2}
+.story .sec-eyebrow{color:var(--gold-pale)}
+.story .sec-title{color:#fff;margin-bottom:44px}
+.story-text{font-size:1.05rem;line-height:1.85;color:rgba(255,255,255,.72)}
+.story-text p{margin-bottom:22px}
+.story-text strong{color:var(--gold-pale);font-weight:600}
+.story-pull{
+  font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:600;font-style:italic;
+  color:var(--gold);line-height:1.5;text-align:center;
+  padding:36px 0;margin:36px 0;
+  border-top:1px solid rgba(201,162,39,.2);border-bottom:1px solid rgba(201,162,39,.2);
+}
+
+/* === INSIDE === */
+.inside{padding:100px 40px;background:var(--warm-white)}
+.inside-inner{max-width:840px;margin:0 auto}
+.inside-list{list-style:none}
+.inside-list li{
+  display:flex;align-items:flex-start;gap:20px;
+  padding:22px 0;border-bottom:1px solid rgba(0,0,0,.05);
+  font-size:1rem;line-height:1.75;
+}
+.inside-list li:last-child{border-bottom:none}
+.inside-list strong{color:var(--purple-deep)}
+
+/* === AUTHOR === */
+.author-sec{padding:100px 40px;background:var(--cream)}
+.author-inner{max-width:780px;margin:0 auto;text-align:center}
+.author-inner .sec-title{margin-bottom:32px}
+.author-bio{font-size:1.05rem;line-height:1.85;color:var(--text)}
+.author-bio p{margin-bottom:18px}
+.tags{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:32px}
+.tag{
+  padding:9px 18px;background:var(--warm-white);border-radius:50px;
+  font-size:.8rem;font-weight:600;color:var(--purple);
+  border:1px solid rgba(61,31,92,.12);
+}
+
+
+.btn-purple{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:15px 32px;border:none;border-radius:6px;cursor:pointer;
+  background:var(--purple);color:#fff;
+  font-family:'Manrope',sans-serif;font-size:.9rem;font-weight:700;
+  text-decoration:none;transition:all .25s ease;
+  box-shadow:0 4px 16px rgba(61,31,92,.25);
+}
+.btn-purple:hover{background:var(--purple-deep);transform:translateY(-2px);box-shadow:0 8px 24px rgba(61,31,92,.35)}
+
+
+
+/* === COMPANION / CALCULATOR === */
+.companion{padding:80px 40px;background:var(--warm-white);text-align:center}
+.companion-box{
+  max-width:640px;margin:0 auto;padding:44px;
+  background:var(--cream);border-radius:16px;
+  border:1px solid rgba(201,162,39,.18);
+}
+.companion-badge{
+  display:inline-block;padding:5px 14px;margin-bottom:18px;
+  background:var(--gold);color:var(--purple-deep);border-radius:50px;
+  font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+}
+.companion-box h2{
+  font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;
+  color:var(--purple-deep);margin-bottom:10px;
+}
+.companion-box p{font-size:.95rem;color:var(--muted);line-height:1.7;margin-bottom:24px}
+
+/* === EMAIL SIGNUP === */
+.signup{padding:80px 40px;background:var(--cream);text-align:center;border-top:1px solid rgba(0,0,0,.04)}
+.signup-inner{max-width:520px;margin:0 auto}
+.signup .sec-title{margin-bottom:12px}
+.signup-sub{font-size:.95rem;color:var(--muted);line-height:1.7;margin-bottom:32px}
+.signup-form{display:flex;gap:10px;margin-bottom:12px}
+.signup-form input{
+  flex:1;padding:14px 18px;border:1px solid rgba(0,0,0,.1);border-radius:6px;
+  font-family:'Manrope',sans-serif;font-size:.9rem;background:var(--warm-white);
+  outline:none;transition:border-color .2s;
+}
+.signup-form input:focus{border-color:var(--gold)}
+.signup-form button{
+  padding:14px 28px;background:var(--gold);color:var(--purple-deep);
+  border:none;border-radius:6px;font-family:'Manrope',sans-serif;
+  font-size:.9rem;font-weight:700;cursor:pointer;white-space:nowrap;
+  transition:all .25s;
+}
+.signup-form button:hover{background:var(--gold-bright);transform:translateY(-1px)}
+.signup-fine{font-size:.75rem;color:var(--muted);opacity:.7}
+
+/* === FINAL CTA === */
+.final{
+  padding:120px 40px;text-align:center;
+  background:var(--purple-deep);position:relative;overflow:hidden;
+}
+.final::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.final-inner{max-width:580px;margin:0 auto;position:relative;z-index:2}
+.final h2{
+  font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;
+  color:var(--gold);line-height:1.2;margin-bottom:16px;
+}
+.final p{font-size:1.1rem;color:rgba(255,255,255,.65);line-height:1.75;margin-bottom:40px}
+.final .btn-gold{opacity:1;animation:none}
+
+/* === CONTACT === */
+.contact{padding:100px 40px;background:var(--warm-white)}
+.contact-inner{max-width:600px;margin:0 auto}
+.contact .sec-title{margin-bottom:36px}
+.contact-form{display:flex;flex-direction:column;gap:16px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-size:.78rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.form-group input,.form-group select,.form-group textarea{
+  padding:14px 16px;border:1px solid rgba(0,0,0,.1);border-radius:8px;
+  font-family:'Manrope',sans-serif;font-size:.9rem;background:var(--cream);
+  outline:none;transition:border-color .2s;resize:vertical;
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold)}
+.form-group textarea{min-height:120px}
+.contact-submit{align-self:flex-start}
+
+/* === FOOTER === */
+footer{
+  padding:48px 40px 36px;background:var(--ink);color:rgba(255,255,255,.4);
+}
+.footer-inner{max-width:1000px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;margin-bottom:36px;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,.08)}
+.footer-brand .fb-name{
+  font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;
+  color:var(--gold);margin-bottom:6px;
+}
+.footer-brand p{font-size:.82rem;line-height:1.6}
+.footer-links{display:flex;gap:40px}
+.footer-col h4{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,.6);margin-bottom:12px}
+.footer-col a{display:block;font-size:.82rem;color:rgba(255,255,255,.4);text-decoration:none;margin-bottom:8px;transition:color .2s}
+.footer-col a:hover{color:var(--gold)}
+.footer-bottom{text-align:center;font-size:.78rem}
+.footer-bottom a{color:var(--gold);text-decoration:none}
+
+/* === ANIMATIONS === */
+@keyframes rise{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.fade-in{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* === RESPONSIVE === */
+@media(max-width:960px){
+  .hero-grid{grid-template-columns:1fr;gap:48px;text-align:center;padding:100px 28px 60px}
+  .hero-body{margin-left:auto;margin-right:auto}
+  .hero-book{order:-1}
+  .book-cover{width:420px;transform:none}
+  .book-cover:hover{transform:none}
+  .footer-top{flex-direction:column;text-align:center}
+  .footer-links{justify-content:center}
+}
+@media(max-width:768px){
+  .nav-links{
+    display:none;flex-direction:column;
+    position:absolute;top:100%;left:0;right:0;
+    background:rgba(39,19,59,.98);padding:20px 40px 28px;gap:16px;
+    border-bottom:1px solid rgba(201,162,39,.15);
+  }
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .form-row{grid-template-columns:1fr}
+  .signup-form{flex-direction:column}
+}
+@media(max-width:520px){
+  .hero-grid{padding:80px 20px 40px}
+  .book-cover{width:280px}
+  section{padding-left:20px!important;padding-right:20px!important}
+  .footer-links{flex-direction:column;gap:24px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">DREAM BIG</a>
+    <button class="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#framework">Framework</a></li>
+      <li><a href="#story">The Story</a></li>
+      <li><a href="#inside">Inside</a></li>
+      <li><a href="#author">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="calculator.html">Calculator</a></li>
+      <li><a href="#buy" class="nav-cta">Order Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <p class="hero-eyebrow">A New Book by Corey L. Cook</p>
+      <h1><em>DREAM BIG</em></h1>
+      <p class="hero-sub">A Father &amp; Mentor&rsquo;s Guide to<br>Life After High School</p>
+      <p class="hero-body">I wrote this book for my five children. But I also wrote it for every young person growing up in communities like mine&mdash;where the roadmap isn&rsquo;t always clear, where examples of what&rsquo;s possible feel rare, and where one wrong decision can follow you for years. I graduated high school at 20 years old after being held back twice. Today I&rsquo;m the COO of the Erie Downtown Development Corporation. The difference isn&rsquo;t talent or luck. <strong>You are the sum of your decisions</strong>&mdash;and this book is the advice I wish someone had given me.</p>
+      <a href="#buy" class="btn-gold">Order Your Copy <svg viewBox="0 0 16 16"><path d="M1 8h12.2l-4.6 4.6L10 14l6-6-6-6-1.4 1.4L13.2 8H1z"/></svg></a>
+    </div>
+    <div class="hero-book">
+      <div class="book-cover">
+        <img src="book-cover.png" alt="DREAM BIG book cover — A Father & Mentor's Guide to Life After High School by Corey Cook">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-banner">
+  <blockquote>&ldquo;I&rsquo;m writing this for my five kids. But I&rsquo;m also writing it for you&mdash;the young person standing at the edge of adulthood, trying to figure out what comes next. Especially if you&rsquo;re from communities like mine, where the roadmap isn&rsquo;t always clear. If it&rsquo;s not written, it&rsquo;s not real. So that&rsquo;s what I&rsquo;m doing here&mdash;making it real, making it tangible.&rdquo;</blockquote>
+  <cite>&mdash; from the Introduction</cite>
+</section>
+
+<!-- FRAMEWORK -->
+<section class="framework" id="framework">
+  <div class="framework-inner">
+    <p class="sec-eyebrow">The Framework</p>
+    <h2 class="sec-title">Eight Principles. One Acronym.<br>A Lifetime of Purpose.</h2>
+    <div class="fw-grid">
+      <div class="fw-card fade-in">
+        <span class="fw-letter">D</span>
+        <div><h3>Discovering Your Path</h3><p>Aligning work with passion&mdash;starting with one small decision that changes everything.</p></div>
+      </div>
+      <div class="fw-card fade-in">
+        <span class="fw-letter">R</span>
+        <div><h3>Relationships &amp; Support Systems</h3><p>Building a network that opens doors you can&rsquo;t see yet.</p></div>
+      </div>
+      <div class="fw-card fade-in">
+        <span class="fw-letter">E</span>
+        <div><h3>Education &amp; Lifelong Learning</h3><p>Why learning doesn&rsquo;t stop when school ends&mdash;and why skills compound.</p></div>
+      </div>
+      <div class="fw-card fade-in">
+        <span class="fw-letter">A</span>
+        <div><h3>Adaptability &amp; Resilience</h3><p>How to pivot when life doesn&rsquo;t go according to plan&mdash;and stay ready.</p></div>
+      </div>
+      <div class="fw-card fade-in">
+        <span class="fw-letter">M</span>
+        <div><h3>Monetary Success</h3><p>The truth about credit scores and the $600 mistake that cost thousands.</p></div>
+      </div>
+      <div class="fw-card fade-in">
+        <span class="fw-letter">B</span>
+        <div><h3>Building a Career</h3><p>Turning a job into a career through intentionality and transferable skills.</p></div>
+      </div>
+      <div class="fw-card fade-in">
+        <span class="fw-letter">I</span>
+        <div><h3>Inner Fulfillment Through Sharing</h3><p>Why the joy of sharing exceeds the joy of keeping.</p></div>
+      </div>
+      <div class="fw-card fade-in">
+        <span class="fw-letter">G</span>
+        <div><h3>Giving Back</h3><p>How to elevate your community as you rise&mdash;because real success lifts others.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story" id="story">
+  <div class="story-bg" aria-hidden="true"></div>
+  <div class="story-inner">
+    <p class="sec-eyebrow">The Story Behind the Book</p>
+    <h2 class="sec-title">From the Lower East Side of Erie<br>to Entrepreneur, Community Leader &amp; Executive</h2>
+    <div class="story-text">
+      <p>Growing up on the Lower East Side of Erie, Corey didn&rsquo;t have a guidebook. No one sat him down and explained how credit works, how to build a career, or how one decision at 17 could shape the next 20 years. He learned by living it&mdash;over 16 years at UPS training people who got promoted ahead of him, starting a music mentoring program with 10&ndash;15 kids, wearing suits to events years before he had a &ldquo;professional&rdquo; job that required them.</p>
+      <p>When he became a father of five, he realized the advice he&rsquo;d pieced together over a lifetime needed to be written down. Not just for his own children, but for every young person growing up in communities where that guidance doesn&rsquo;t exist&mdash;where the gap between potential and opportunity is filled with silence.</p>
+      <div class="story-pull">&ldquo;Nobody believed in me before I believed in myself. That&rsquo;s just how it works. You have to see it before anyone else sees it.&rdquo;</div>
+      <p>He never planned to become the COO of the Erie Downtown Development Corporation. He didn&rsquo;t apply for the job. But because he&rsquo;d built relationships, shown up consistently, and done good work&mdash;someone thought of him when the opportunity came. Every step was a decision. Every decision compounded. <strong>You are the sum of your decisions</strong>&mdash;and this book exists so the next generation doesn&rsquo;t have to figure that out alone.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INSIDE THE BOOK -->
+<section class="inside" id="inside">
+  <div class="inside-inner">
+    <p class="sec-eyebrow">Inside the Book</p>
+    <h2 class="sec-title">The Advice I Wish<br>Someone Had Given Me.</h2>
+    <ul class="inside-list">
+      <li class="fade-in"><div><strong>How small decisions compound into big outcomes</strong>&mdash;and why the next right decision is all you need to focus on right now.</div></li>
+      <li class="fade-in"><div><strong>The real cost of bad credit</strong>&mdash;with exact dollar comparisons showing how a $25,000 car costs $9,498 more with bad credit, and a $150,000 home costs $125,280 more over 30 years.</div></li>
+      <li class="fade-in"><div><strong>Why your network is your net worth</strong>&mdash;and how one unexpected text message led to a career-changing opportunity.</div></li>
+      <li class="fade-in"><div><strong>How to stay patient without getting bitter</strong>&mdash;lessons from over 16 years of training people who got promoted ahead of him.</div></li>
+      <li class="fade-in"><div><strong>Why you don&rsquo;t have to leave your city to succeed</strong>&mdash;and the courage it takes to stay and build where you are.</div></li>
+      <li class="fade-in"><div><strong>How sharing your gifts changes you more than it changes others</strong>&mdash;from teaching 10 kids music to reaching a national audience.</div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- AUTHOR -->
+<section class="author-sec" id="author">
+  <div class="author-inner">
+    <p class="sec-eyebrow">About the Author</p>
+    <h2 class="sec-title">Corey L. Cook</h2>
+    <div class="author-bio">
+      <p>Community leader, entrepreneur, and mentor dedicated to creating opportunities for the next generation. As the Chief Operating Officer for the Erie Downtown Development Corporation (EDDC), he works every day to help revitalize his hometown of Erie, Pennsylvania.</p>
+      <p>Corey&rsquo;s story is proof that where you start doesn&rsquo;t determine where you finish. After graduating high school at age 20 and working for over 16 years at UPS, he committed himself to lifelong learning and service. He founded Lifethrumusic, a nonprofit mentoring program for youth, and serves as CEO of Cook Media LLC.</p>
+      <p>His work has been featured on Good Morning America, and he has served on state commissions under Pennsylvania Governors Tom Wolf and Josh Shapiro. In 2024, his civic leadership led to an invitation to meet with Vice President Kamala Harris to discuss the future of his community.</p>
+      <p>Beyond his work, Corey considers his most important role to be at home. He resides in Erie with his wife, Latasha, and their five children: Daevante&rsquo;, Darrian, Cameron, Jordan, and Neriah.</p>
+    </div>
+    <div class="tags">
+      <span class="tag">COO, Erie Downtown Development Corporation</span>
+      <span class="tag">Featured on Good Morning America</span>
+      <span class="tag">Founder, Lifethrumusic</span>
+      <span class="tag">CEO, Cook Media LLC</span>
+      <span class="tag">PA Council on Inclusive Procurement</span>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- COMPANION CALCULATOR -->
+<section class="companion">
+  <div class="companion-box fade-in">
+    <span class="companion-badge">Free Companion Tool</span>
+    <h2>Financial Literacy Calculator</h2>
+    <p>One decision about credit can cost you tens of thousands of dollars. This interactive tool brings Chapter 5 to life&mdash;so you can see exactly what&rsquo;s at stake with car loans, mortgages, credit cards, and retirement.</p>
+    <a href="calculator.html" class="btn-purple">Launch the Calculator <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M1 8h12.2l-4.6 4.6L10 14l6-6-6-6-1.4 1.4L13.2 8H1z"/></svg></a>
+  </div>
+</section>
+
+<!-- EMAIL SIGNUP -->
+<section class="signup" id="signup">
+  <div class="signup-inner">
+    <p class="sec-eyebrow">Stay Connected</p>
+    <h2 class="sec-title">Join the Movement</h2>
+    <p class="signup-sub">Get updates on the book, community events, and resources for the next generation of decision-makers.</p>
+    <form class="signup-form" action="#" onsubmit="return false;">
+      <input type="text" placeholder="First Name" aria-label="First Name">
+      <input type="email" placeholder="Email Address" aria-label="Email Address" required>
+      <button type="submit">Subscribe</button>
+    </form>
+    <p class="signup-fine">We respect your privacy. Unsubscribe anytime.</p>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final" id="buy">
+  <div class="final-inner">
+    <h2>You Are the Sum<br>of Your Decisions.</h2>
+    <p>This book was written as a legacy&mdash;for my children, and for yours. For every young person in every community where this conversation isn&rsquo;t happening. The roadmap you didn&rsquo;t get is right here.</p>
+    <a href="#" class="btn-gold">Order DREAM BIG <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M1 8h12.2l-4.6 4.6L10 14l6-6-6-6-1.4 1.4L13.2 8H1z"/></svg></a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <p class="sec-eyebrow">Get in Touch</p>
+    <h2 class="sec-title">Contact</h2>
+    <form class="contact-form" action="#" onsubmit="return false;">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="c-name">Name</label>
+          <input type="text" id="c-name" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label for="c-email">Email</label>
+          <input type="email" id="c-email" placeholder="your@email.com">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="c-subject">Subject</label>
+        <select id="c-subject">
+          <option value="">Select a topic&hellip;</option>
+          <option>General Inquiry</option>
+          <option>Speaking Engagement</option>
+          <option>Bulk Orders</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="c-msg">Message</label>
+        <textarea id="c-msg" placeholder="How can Corey help?"></textarea>
+      </div>
+      <button type="submit" class="btn-gold contact-submit" style="opacity:1;animation:none">Send Message <svg viewBox="0 0 16 16"><path d="M1 8h12.2l-4.6 4.6L10 14l6-6-6-6-1.4 1.4L13.2 8H1z"/></svg></button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="fb-name">DREAM BIG</div>
+        <p>&copy; 2025 Corey L. Cook<br>Cook Media LLC &middot; Erie, Pennsylvania</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Book</h4>
+          <a href="#framework">Framework</a>
+          <a href="#story">The Story</a>
+          <a href="#inside">Inside</a>
+          <a href="#buy">Order</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="calculator.html">Calculator</a>
+          <a href="#signup">Newsletter</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Follow</h4>
+          <a href="#">Instagram</a>
+          <a href="#">Facebook</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">X / Twitter</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p><a href="#">lifeafterhs.com</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Sticky nav
+const nav = document.querySelector('.site-nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// Hamburger
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  navLinks.classList.toggle('open');
+});
+// Close on link click
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    navLinks.classList.remove('open');
+  });
+});
+
+// Fade-in on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

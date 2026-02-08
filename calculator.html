@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financial Literacy Calculator — DREAM BIG | Corey L. Cook</title>
+<meta name="description" content="See the real cost of bad credit. The companion tool to Chapter 5 of DREAM BIG by Corey L. Cook.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#C9A227;--gold-bright:#D4AF37;--gold-pale:#F0DFA0;
+  --purple:#3D1F5C;--purple-deep:#27133B;--purple-mid:#5A3580;
+  --cream:#FAF7F0;--warm-white:#FFFDF8;
+  --ink:#1A1A1A;--text:#3A3530;--muted:#8A857D;
+  --green:#2A7D4F;--red:#C0392B;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',sans-serif;color:var(--text);background:var(--warm-white);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* === HEADER === */
+.calc-header{
+  background:var(--purple-deep);padding:28px 40px;
+  border-bottom:1px solid rgba(201,162,39,.15);
+}
+.calc-header-inner{
+  max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:16px;
+}
+.calc-header a{text-decoration:none;transition:all .2s}
+.back-link{
+  font-size:.82rem;font-weight:600;color:rgba(255,255,255,.6);
+  display:inline-flex;align-items:center;gap:8px;
+}
+.back-link:hover{color:var(--gold)}
+.back-link svg{width:14px;height:14px;fill:currentColor;transform:rotate(180deg)}
+.calc-logo{
+  font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--gold);
+}
+.calc-badge{
+  padding:5px 14px;background:var(--gold);color:var(--purple-deep);border-radius:50px;
+  font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+}
+
+/* === INTRO === */
+.calc-intro{
+  background:var(--purple-deep);padding:48px 40px 64px;text-align:center;color:#fff;
+}
+.calc-intro h1{
+  font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,2.8rem);
+  font-weight:700;color:var(--gold);margin-bottom:12px;
+}
+.calc-intro p{
+  font-size:1rem;color:rgba(255,255,255,.6);max-width:560px;margin:0 auto;line-height:1.7;
+}
+.einstein-quote{
+  font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;
+  color:var(--gold-pale);max-width:480px;margin:20px auto 0;line-height:1.6;
+}
+.einstein-quote cite{
+  display:block;margin-top:6px;font-family:'Manrope',sans-serif;
+  font-size:.72rem;font-style:normal;font-weight:600;color:rgba(255,255,255,.4);
+}
+
+/* === TABS === */
+.calc-wrap{max-width:900px;margin:-32px auto 0;padding:0 24px 80px;position:relative;z-index:2}
+.tab-bar{
+  display:flex;gap:4px;background:var(--cream);padding:6px;border-radius:12px;
+  border:1px solid rgba(0,0,0,.06);margin-bottom:28px;
+}
+.tab-btn{
+  flex:1;padding:14px 16px;border:none;border-radius:8px;
+  background:transparent;color:var(--muted);
+  font-family:'Manrope',sans-serif;font-size:.82rem;font-weight:700;
+  cursor:pointer;transition:all .2s;text-align:center;
+}
+.tab-btn:hover{color:var(--purple)}
+.tab-btn.active{background:var(--purple-deep);color:#fff;box-shadow:0 4px 16px rgba(39,19,59,.2)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* === CARD === */
+.calc-card{
+  background:#fff;border-radius:16px;padding:36px;
+  border:1px solid rgba(0,0,0,.06);
+  box-shadow:0 4px 24px rgba(0,0,0,.04);
+}
+.calc-card h2{
+  font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;
+  color:var(--purple-deep);margin-bottom:6px;
+}
+.calc-card .card-sub{font-size:.88rem;color:var(--muted);line-height:1.6;margin-bottom:28px}
+.calc-card .card-sub strong{color:var(--purple-deep)}
+
+/* === FORM ELEMENTS === */
+.input-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px}
+.input-group{display:flex;flex-direction:column;gap:5px}
+.input-group label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.input-group input,.input-group select{
+  padding:13px 16px;border:1px solid rgba(0,0,0,.1);border-radius:8px;
+  font-family:'Manrope',sans-serif;font-size:.92rem;
+  background:var(--cream);outline:none;transition:border-color .2s;
+}
+.input-group input:focus,.input-group select:focus{border-color:var(--gold)}
+.calc-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:15px 32px;border:none;border-radius:6px;cursor:pointer;
+  background:var(--gold);color:var(--purple-deep);
+  font-family:'Manrope',sans-serif;font-size:.9rem;font-weight:700;
+  box-shadow:0 4px 16px rgba(201,162,39,.25);transition:all .25s;
+}
+.calc-btn:hover{background:var(--gold-bright);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,162,39,.35)}
+
+/* === RESULTS === */
+.results{
+  margin-top:28px;padding-top:28px;
+  border-top:1px solid rgba(0,0,0,.06);
+  display:none;
+}
+.results.show{display:block;animation:rise .4s ease}
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.result-box{padding:22px;border-radius:12px;text-align:center}
+.result-box.good{background:rgba(42,125,79,.06);border:1px solid rgba(42,125,79,.15)}
+.result-box.poor{background:rgba(192,57,43,.06);border:1px solid rgba(192,57,43,.15)}
+.result-box .rb-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px}
+.result-box.good .rb-label{color:var(--green)}
+.result-box.poor .rb-label{color:var(--red)}
+.result-box .rb-value{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;line-height:1.1}
+.result-box.good .rb-value{color:var(--green)}
+.result-box.poor .rb-value{color:var(--red)}
+.result-box .rb-detail{font-size:.78rem;color:var(--muted);margin-top:4px}
+.cost-diff{
+  text-align:center;padding:20px;background:rgba(201,162,39,.08);
+  border-radius:12px;border:1px solid rgba(201,162,39,.15);
+}
+.cost-diff .cd-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:4px}
+.cost-diff .cd-value{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;color:var(--purple-deep)}
+.cost-diff .cd-note{font-size:.82rem;color:var(--muted);margin-top:4px}
+
+/* === BOOK CALLOUT === */
+.book-callout{
+  margin-top:24px;padding:22px 24px;
+  background:var(--cream);border-radius:10px;
+  border-left:3px solid var(--gold);
+}
+.book-callout p{
+  font-family:'Cormorant Garamond',serif;font-size:1.05rem;
+  font-style:italic;color:var(--purple);line-height:1.6;margin:0;
+}
+.book-callout cite{
+  display:block;margin-top:8px;font-family:'Manrope',sans-serif;
+  font-size:.72rem;font-style:normal;font-weight:600;color:var(--muted);
+}
+
+/* === AMORTIZATION TABLE === */
+.amort-wrap{margin-top:20px;overflow-x:auto}
+.amort-table{width:100%;border-collapse:collapse;font-size:.8rem}
+.amort-table th{
+  padding:10px 12px;text-align:left;font-size:.68rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--muted);
+  border-bottom:2px solid rgba(0,0,0,.08);background:var(--cream);
+}
+.amort-table td{padding:10px 12px;border-bottom:1px solid rgba(0,0,0,.04);color:var(--text)}
+.amort-table tr:hover td{background:rgba(201,162,39,.04)}
+
+/* === CHART === */
+.chart-area{margin-top:24px}
+.chart-area canvas{width:100%;border-radius:12px;background:var(--cream);border:1px solid rgba(0,0,0,.04)}
+.chart-legend{display:flex;justify-content:center;gap:24px;margin-top:12px}
+.chart-legend span{display:flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+
+/* === DISCLAIMER === */
+.disclaimer{
+  max-width:900px;margin:0 auto 0;padding:0 24px;position:relative;z-index:2;
+}
+.disclaimer-box{
+  margin-top:-8px;margin-bottom:24px;padding:22px 28px;
+  background:rgba(192,57,43,.04);border-radius:12px;
+  border:1px solid rgba(192,57,43,.12);
+}
+.disclaimer-title{
+  font-family:'Manrope',sans-serif;font-size:.78rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin-bottom:8px;
+}
+.disclaimer-box p{font-size:.88rem;color:var(--text);line-height:1.7;margin:0}
+.disclaimer-box p+p{margin-top:8px}
+.disclaimer-box strong{color:var(--purple-deep)}
+
+/* === GLOSSARY === */
+.glossary{
+  max-width:900px;margin:0 auto;padding:0 24px 80px;
+}
+.glossary-inner{
+  background:#fff;border-radius:16px;padding:40px 36px;
+  border:1px solid rgba(0,0,0,.06);box-shadow:0 4px 24px rgba(0,0,0,.04);
+}
+.glossary-title{
+  font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;
+  color:var(--purple-deep);margin-bottom:8px;
+}
+.glossary-sub{font-size:.88rem;color:var(--muted);line-height:1.6;margin-bottom:28px}
+.glossary-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.gl-term{padding:18px 20px;background:var(--cream);border-radius:10px;border:1px solid transparent;transition:all .25s}
+.gl-term:hover{border-color:rgba(201,162,39,.2);box-shadow:0 4px 16px rgba(0,0,0,.03)}
+.gl-word{
+  font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;
+  color:var(--purple-deep);margin-bottom:4px;
+}
+.gl-def{font-size:.82rem;color:var(--muted);line-height:1.65}
+
+/* === FOOTER === */
+.calc-footer{
+  padding:36px 40px;background:var(--ink);text-align:center;
+  color:rgba(255,255,255,.4);font-size:.8rem;
+}
+.calc-footer a{color:var(--gold);text-decoration:none}
+
+/* === ANIMATIONS === */
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* === RESPONSIVE === */
+@media(max-width:768px){
+  .tab-bar{flex-wrap:wrap}
+  .tab-btn{flex:1 1 45%;font-size:.78rem;padding:12px 10px}
+  .input-grid{grid-template-columns:1fr}
+  .results-grid{grid-template-columns:1fr}
+  .calc-card{padding:24px 20px}
+  .calc-header-inner{justify-content:center;text-align:center}
+  .glossary-grid{grid-template-columns:1fr}
+  .glossary-inner{padding:28px 20px}
+}
+@media(max-width:520px){
+  .calc-header{padding:20px 20px}
+  .calc-intro{padding:36px 20px 52px}
+  .calc-wrap{padding:0 16px 60px}
+  .tab-btn{flex:1 1 100%}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="calc-header">
+  <div class="calc-header-inner">
+    <a href="index.html" class="back-link"><svg viewBox="0 0 16 16"><path d="M1 8h12.2l-4.6 4.6L10 14l6-6-6-6-1.4 1.4L13.2 8H1z"/></svg> Back to DREAM BIG</a>
+    <span class="calc-logo">DREAM BIG</span>
+    <span class="calc-badge">Chapter 5 Companion</span>
+  </div>
+</header>
+
+<!-- INTRO -->
+<section class="calc-intro">
+  <h1>Financial Literacy Calculator</h1>
+  <p>See the real cost of bad credit for yourself. These numbers are real&mdash;straight from Chapter 5 of DREAM BIG.</p>
+  <blockquote class="einstein-quote">&ldquo;The most powerful force in the Universe is compound interest.&rdquo;<cite>&mdash; Albert Einstein</cite></blockquote>
+</section>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  <div class="disclaimer-box">
+    <div class="disclaimer-title">Important: How Loans Really Work</div>
+    <p>When you take out a loan, your monthly payment stays the same&mdash;but where that money goes changes dramatically over time. In the early years, <strong>the majority of every payment goes toward interest, not your actual balance</strong>. This is called front-loaded interest. On a 30-year mortgage, you could be 10 years in and still owe nearly what you started with, because most of your payments went straight to the bank.</p>
+    <p>The worse your credit score, the higher your interest rate&mdash;and the more of your hard-earned money disappears into interest before it ever touches your principal. <strong>Use the calculators below to see exactly how much this costs you.</strong></p>
+  </div>
+</div>
+
+<!-- CALCULATOR -->
+<div class="calc-wrap">
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="car">Car Loan</button>
+    <button class="tab-btn" data-tab="mortgage">Home Mortgage</button>
+    <button class="tab-btn" data-tab="credit">Credit Card</button>
+    <button class="tab-btn" data-tab="retire">Retirement</button>
+  </div>
+
+  <!-- CAR LOAN -->
+  <div class="tab-panel active" id="tab-car">
+    <div class="calc-card">
+      <h2>Car Loan Comparison</h2>
+      <p class="card-sub">In the book, a $25,000 car costs <strong>$9,498 more</strong> with bad credit. Enter your numbers to see your cost.</p>
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Vehicle Price</label>
+          <input type="number" id="car-price" value="25000" min="1000" step="500">
+        </div>
+        <div class="input-group">
+          <label>Down Payment</label>
+          <input type="number" id="car-down" value="0" min="0" step="100">
+        </div>
+        <div class="input-group">
+          <label>Loan Term (Years)</label>
+          <select id="car-term">
+            <option value="3">3 Years</option>
+            <option value="4">4 Years</option>
+            <option value="5" selected>5 Years</option>
+            <option value="6">6 Years</option>
+            <option value="7">7 Years</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Your Credit</label>
+          <select id="car-credit">
+            <option value="excellent">Excellent (720+)</option>
+            <option value="good">Good (680-719)</option>
+            <option value="fair" selected>Fair (620-679)</option>
+            <option value="poor">Poor (Below 620)</option>
+          </select>
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calcCar()">Calculate <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M1 8h12.2l-4.6 4.6L10 14l6-6-6-6-1.4 1.4L13.2 8H1z"/></svg></button>
+      <div class="results" id="car-results">
+        <div class="results-grid">
+          <div class="result-box good">
+            <div class="rb-label">With Good Credit</div>
+            <div class="rb-value" id="car-good-total">&mdash;</div>
+            <div class="rb-detail"><span id="car-good-mo">&mdash;</span>/mo at <span id="car-good-rate">&mdash;</span>%</div>
+          </div>
+          <div class="result-box poor">
+            <div class="rb-label">With Your Credit</div>
+            <div class="rb-value" id="car-your-total">&mdash;</div>
+            <div class="rb-detail"><span id="car-your-mo">&mdash;</span>/mo at <span id="car-your-rate">&mdash;</span>%</div>
+          </div>
+        </div>
+        <div class="cost-diff">
+          <div class="cd-label">Bad Credit Costs You Extra</div>
+          <div class="cd-value" id="car-diff">&mdash;</div>
+          <div class="cd-note">For the exact same car</div>
+        </div>
+        <div class="chart-area">
+          <canvas id="car-chart" height="280"></canvas>
+          <div class="chart-legend">
+            <span><span class="legend-dot" style="background:var(--green)"></span> Good Credit</span>
+            <span><span class="legend-dot" style="background:var(--red)"></span> Your Credit</span>
+            <span><span class="legend-dot" style="background:rgba(201,162,39,.5)"></span> Principal</span>
+          </div>
+        </div>
+        <div class="book-callout">
+          <p>&ldquo;That credit card went into default. And that $600&mdash;along with all the interest, penalties, and fees that piled on top of it&mdash;followed me for years.&rdquo;</p>
+          <cite>&mdash; Chapter 5, DREAM BIG</cite>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MORTGAGE -->
+  <div class="tab-panel" id="tab-mortgage">
+    <div class="calc-card">
+      <h2>Home Mortgage Comparison</h2>
+      <p class="card-sub">In the book, a $150,000 home costs <strong>over $125,000 more</strong> with bad credit over 30 years.</p>
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Home Price</label>
+          <input type="number" id="mort-price" value="150000" min="10000" step="5000">
+        </div>
+        <div class="input-group">
+          <label>Down Payment</label>
+          <input type="number" id="mort-down" value="0" min="0" step="1000">
+        </div>
+        <div class="input-group">
+          <label>Loan Term</label>
+          <select id="mort-term">
+            <option value="15">15 Years</option>
+            <option value="20">20 Years</option>
+            <option value="30" selected>30 Years</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Your Credit</label>
+          <select id="mort-credit">
+            <option value="excellent">Excellent (720+)</option>
+            <option value="good">Good (680-719)</option>
+            <option value="fair" selected>Fair (620-679)</option>
+            <option value="poor">Poor (Below 620)</option>
+          </select>
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calcMortgage()">Calculate <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M1 8h12.2l-4.6 4.6L10 14l6-6-6-6-1.4 1.4L13.2 8H1z"/></svg></button>
+      <div class="results" id="mort-results">
+        <div class="results-grid">
+          <div class="result-box good">
+            <div class="rb-label">With Good Credit</div>
+            <div class="rb-value" id="mort-good-total">&mdash;</div>
+            <div class="rb-detail"><span id="mort-good-mo">&mdash;</span>/mo at <span id="mort-good-rate">&mdash;</span>%</div>
+          </div>
+          <div class="result-box poor">
+            <div class="rb-label">With Your Credit</div>
+            <div class="rb-value" id="mort-your-total">&mdash;</div>
+            <div class="rb-detail"><span id="mort-your-mo">&mdash;</span>/mo at <span id="mort-your-rate">&mdash;</span>%</div>
+          </div>
+        </div>
+        <div class="cost-diff">
+          <div class="cd-label">Bad Credit Costs You Extra</div>
+          <div class="cd-value" id="mort-diff">&mdash;</div>
+          <div class="cd-note">For the exact same house</div>
+        </div>
+        <div class="amort-wrap">
+          <table class="amort-table" id="mort-table">
+            <thead><tr><th>Year</th><th>Monthly Pmt</th><th>Interest Paid</th><th>Principal Paid</th><th>Remaining</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="chart-area">
+          <canvas id="mort-chart" height="280"></canvas>
+          <div class="chart-legend">
+            <span><span class="legend-dot" style="background:var(--green)"></span> Good Credit Balance</span>
+            <span><span class="legend-dot" style="background:var(--red)"></span> Your Credit Balance</span>
+          </div>
+        </div>
+        <div class="book-callout">
+          <p>&ldquo;Let me say that again: Four hundred thousand dollars. That&rsquo;s not a down payment. That&rsquo;s not the price of something. That&rsquo;s pure extra cost&mdash;money you&rsquo;re paying because you didn&rsquo;t protect your credit.&rdquo;</p>
+          <cite>&mdash; Chapter 5, DREAM BIG</cite>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CREDIT CARD -->
+  <div class="tab-panel" id="tab-credit">
+    <div class="calc-card">
+      <h2>Credit Card Payoff</h2>
+      <p class="card-sub">Corey&rsquo;s $600 credit card taught him a lesson that cost thousands. See how minimum payments trap you.</p>
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Balance Owed</label>
+          <input type="number" id="cc-balance" value="600" min="100" step="50">
+        </div>
+        <div class="input-group">
+          <label>Interest Rate (APR %)</label>
+          <input type="number" id="cc-apr" value="22" min="1" max="40" step="0.5">
+        </div>
+        <div class="input-group">
+          <label>Minimum Payment %</label>
+          <input type="number" id="cc-minpct" value="2" min="1" max="10" step="0.5">
+        </div>
+        <div class="input-group">
+          <label>Fixed Monthly Payment</label>
+          <input type="number" id="cc-fixed" value="50" min="0" step="5" placeholder="e.g. $50">
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calcCredit()">Calculate <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M1 8h12.2l-4.6 4.6L10 14l6-6-6-6-1.4 1.4L13.2 8H1z"/></svg></button>
+      <div class="results" id="cc-results">
+        <div class="results-grid">
+          <div class="result-box poor">
+            <div class="rb-label">Minimum Payments</div>
+            <div class="rb-value" id="cc-min-total">&mdash;</div>
+            <div class="rb-detail"><span id="cc-min-months">&mdash;</span> months to pay off</div>
+          </div>
+          <div class="result-box good">
+            <div class="rb-label">Fixed Payments</div>
+            <div class="rb-value" id="cc-fix-total">&mdash;</div>
+            <div class="rb-detail"><span id="cc-fix-months">&mdash;</span> months to pay off</div>
+          </div>
+        </div>
+        <div class="cost-diff">
+          <div class="cd-label">You Save by Paying More</div>
+          <div class="cd-value" id="cc-savings">&mdash;</div>
+          <div class="cd-note">In total interest charges</div>
+        </div>
+        <div class="chart-area">
+          <canvas id="cc-chart" height="280"></canvas>
+          <div class="chart-legend">
+            <span><span class="legend-dot" style="background:var(--red)"></span> Minimum Payments</span>
+            <span><span class="legend-dot" style="background:var(--green)"></span> Fixed Payments</span>
+          </div>
+        </div>
+        <div class="book-callout">
+          <p>&ldquo;I was in college. First credit card. $600 limit. Three weeks. That&rsquo;s how long it took me to max it out. Then the bill came. And I stopped paying it.&rdquo;</p>
+          <cite>&mdash; Chapter 5, DREAM BIG</cite>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RETIREMENT -->
+  <div class="tab-panel" id="tab-retire">
+    <div class="calc-card">
+      <h2>Retirement Investing</h2>
+      <p class="card-sub">The earlier you start, the more time your money has to grow. See the power of compound interest.</p>
+      <div class="input-grid">
+        <div class="input-group">
+          <label>Monthly Investment</label>
+          <input type="number" id="ret-monthly" value="200" min="25" step="25">
+        </div>
+        <div class="input-group">
+          <label>Your Current Age</label>
+          <input type="number" id="ret-age" value="22" min="16" max="60">
+        </div>
+        <div class="input-group">
+          <label>Retirement Age</label>
+          <input type="number" id="ret-retire" value="65" min="50" max="75">
+        </div>
+        <div class="input-group">
+          <label>Annual Return %</label>
+          <input type="number" id="ret-return" value="8" min="1" max="15" step="0.5">
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calcRetire()">Calculate <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M1 8h12.2l-4.6 4.6L10 14l6-6-6-6-1.4 1.4L13.2 8H1z"/></svg></button>
+      <div class="results" id="ret-results">
+        <div class="results-grid">
+          <div class="result-box good">
+            <div class="rb-label">Start at Your Age</div>
+            <div class="rb-value" id="ret-now-total">&mdash;</div>
+            <div class="rb-detail">You contribute <span id="ret-now-contrib">&mdash;</span></div>
+          </div>
+          <div class="result-box poor">
+            <div class="rb-label">Wait 10 Years</div>
+            <div class="rb-value" id="ret-late-total">&mdash;</div>
+            <div class="rb-detail">You contribute <span id="ret-late-contrib">&mdash;</span></div>
+          </div>
+        </div>
+        <div class="cost-diff">
+          <div class="cd-label">Waiting 10 Years Costs You</div>
+          <div class="cd-value" id="ret-diff">&mdash;</div>
+          <div class="cd-note">In lost compound growth</div>
+        </div>
+        <div class="chart-area">
+          <canvas id="ret-chart" height="280"></canvas>
+          <div class="chart-legend">
+            <span><span class="legend-dot" style="background:var(--gold)"></span> Total Contributions</span>
+            <span><span class="legend-dot" style="background:var(--green)"></span> Portfolio Value</span>
+          </div>
+        </div>
+        <div class="book-callout">
+          <p>&ldquo;Take advantage of compound interest by starting to invest early, even with small amounts. The earlier you start, the more time your money has to grow.&rdquo;</p>
+          <cite>&mdash; Chapter 5, DREAM BIG</cite>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GLOSSARY -->
+<div class="glossary">
+  <div class="glossary-inner">
+    <h2 class="glossary-title">Financial Literacy Glossary</h2>
+    <p class="glossary-sub">Key terms every young person should know. Understanding these words is the first step to taking control of your money.</p>
+    <div class="glossary-grid">
+      <div class="gl-term">
+        <div class="gl-word">Amortization</div>
+        <div class="gl-def">The process of paying off a loan through regular payments over time. Each payment is split between interest and principal. Early payments are mostly interest; later payments go mostly toward principal.</div>
+      </div>
+      <div class="gl-term">
+        <div class="gl-word">Principal</div>
+        <div class="gl-def">The original amount of money you borrowed&mdash;before any interest is added. When you buy a $25,000 car, the principal is $25,000.</div>
+      </div>
+      <div class="gl-term">
+        <div class="gl-word">Interest</div>
+        <div class="gl-def">The cost of borrowing money. It&rsquo;s the fee the lender charges you for using their money. The higher your interest rate, the more you pay on top of what you borrowed.</div>
+      </div>
+      <div class="gl-term">
+        <div class="gl-word">Interest Rate (APR)</div>
+        <div class="gl-def">Annual Percentage Rate&mdash;the yearly cost of borrowing money, expressed as a percentage. A 7% APR on a $10,000 loan means you pay roughly $700 per year in interest.</div>
+      </div>
+      <div class="gl-term">
+        <div class="gl-word">Credit Score</div>
+        <div class="gl-def">A number (typically 300&ndash;850) that represents how trustworthy you are with borrowed money. Higher scores get lower interest rates. Paying bills on time, keeping balances low, and not opening too many accounts builds your score.</div>
+      </div>
+      <div class="gl-term">
+        <div class="gl-word">Front-Loaded Interest</div>
+        <div class="gl-def">The way most loans are structured so that you pay more interest at the beginning and more principal at the end. This means in the first years of a mortgage, very little of your payment actually reduces what you owe.</div>
+      </div>
+      <div class="gl-term">
+        <div class="gl-word">Compound Interest</div>
+        <div class="gl-def">Interest that earns interest. When you invest, your returns generate their own returns over time. This is why starting early matters so much&mdash;time is the most powerful factor in building wealth.</div>
+      </div>
+      <div class="gl-term">
+        <div class="gl-word">Minimum Payment</div>
+        <div class="gl-def">The smallest amount your credit card company requires you to pay each month. Paying only the minimum keeps you in debt far longer and costs you significantly more in interest.</div>
+      </div>
+      <div class="gl-term">
+        <div class="gl-word">Default</div>
+        <div class="gl-def">When you fail to make payments on a debt. Defaulting destroys your credit score and can lead to collections, lawsuits, and years of financial consequences&mdash;like Corey&rsquo;s $600 credit card in the book.</div>
+      </div>
+      <div class="gl-term">
+        <div class="gl-word">Equity</div>
+        <div class="gl-def">The portion of an asset you actually own. If your home is worth $200,000 and you owe $150,000 on the mortgage, you have $50,000 in equity. Equity grows as you pay down principal.</div>
+      </div>
+      <div class="gl-term">
+        <div class="gl-word">Down Payment</div>
+        <div class="gl-def">The upfront cash you pay when buying something with a loan. A larger down payment means borrowing less, paying less interest, and often getting a better interest rate.</div>
+      </div>
+      <div class="gl-term">
+        <div class="gl-word">Secured Credit Card</div>
+        <div class="gl-def">A credit card backed by a cash deposit you provide. It&rsquo;s one of the best tools for building or rebuilding credit because the deposit reduces the lender&rsquo;s risk, making approval easier.</div>
+      </div>
+      <div class="gl-term">
+        <div class="gl-word">Debt-to-Income Ratio</div>
+        <div class="gl-def">The percentage of your monthly income that goes toward debt payments. Lenders use this to decide if you can afford more debt. Lower is better&mdash;aim to keep it below 36%.</div>
+      </div>
+      <div class="gl-term">
+        <div class="gl-word">Emergency Fund</div>
+        <div class="gl-def">Money set aside for unexpected expenses&mdash;car repairs, medical bills, job loss. Having 3&ndash;6 months of expenses saved prevents you from going into debt when life happens.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="calc-footer">
+  <p>&copy; 2025 Corey L. Cook &middot; Cook Media LLC &middot; <a href="index.html">Back to DREAM BIG</a></p>
+</footer>
+
+<script>
+// roundRect polyfill for older browsers
+if (!CanvasRenderingContext2D.prototype.roundRect) {
+  CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, radii) {
+    const r = Array.isArray(radii) ? radii[0] || 0 : radii || 0;
+    this.moveTo(x + r, y);
+    this.lineTo(x + w - r, y);
+    this.quadraticCurveTo(x + w, y, x + w, y + r);
+    this.lineTo(x + w, y + h - r);
+    this.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    this.lineTo(x + r, y + h);
+    this.quadraticCurveTo(x, y + h, x, y + h - r);
+    this.lineTo(x, y + r);
+    this.quadraticCurveTo(x, y, x + r, y);
+    this.closePath();
+  };
+}
+
+// Tabs
+const calcFns = { car: calcCar, mortgage: calcMortgage, credit: calcCredit, retire: calcRetire };
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    const tab = btn.dataset.tab;
+    document.getElementById('tab-' + tab).classList.add('active');
+    if (calcFns[tab]) setTimeout(calcFns[tab], 50);
+  });
+});
+
+// Utilities
+function fmt(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+function pmt(principal, annualRate, months) {
+  const r = annualRate / 100 / 12;
+  if (r === 0) return principal / months;
+  return principal * (r * Math.pow(1 + r, months)) / (Math.pow(1 + r, months) - 1);
+}
+const carRates = { excellent: 5.5, good: 7.5, fair: 11, poor: 15 };
+const mortRates = { excellent: 6.5, good: 7, fair: 8, poor: 9.5 };
+
+// ============================================================
+// SHARED CHART HELPER — sets up a hi-DPI canvas & returns info
+// ============================================================
+function initCanvas(id, height) {
+  const canvas = document.getElementById(id);
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = height * dpr;
+  ctx.scale(dpr, dpr);
+  const W = rect.width, H = height;
+  ctx.clearRect(0, 0, W, H);
+  return { canvas, ctx, W, H, dpr };
+}
+function drawGrid(ctx, pad, W, H, maxVal, steps) {
+  const gW = W - pad.left - pad.right;
+  const gH = H - pad.top - pad.bottom;
+  ctx.strokeStyle = 'rgba(0,0,0,.06)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= steps; i++) {
+    const y = pad.top + gH - (gH * i / steps);
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+    ctx.fillStyle = '#8A857D';
+    ctx.font = '11px Manrope, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(fmt(maxVal * i / steps), pad.left - 8, y + 4);
+  }
+}
+function drawLine(ctx, data, pad, gW, gH, maxVal, color, width) {
+  ctx.beginPath();
+  data.forEach((val, i) => {
+    const x = pad.left + (gW * i / (data.length - 1));
+    const y = pad.top + gH - (gH * val / maxVal);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.strokeStyle = color; ctx.lineWidth = width; ctx.stroke();
+}
+function drawFill(ctx, data, pad, gW, gH, maxVal, color) {
+  ctx.beginPath();
+  ctx.moveTo(pad.left, pad.top + gH);
+  data.forEach((val, i) => { ctx.lineTo(pad.left + (gW * i / (data.length - 1)), pad.top + gH - (gH * val / maxVal)); });
+  ctx.lineTo(pad.left + gW, pad.top + gH);
+  ctx.closePath();
+  ctx.fillStyle = color; ctx.fill();
+}
+
+// ============================================================
+// CAR LOAN — bar chart comparing total cost breakdown
+// ============================================================
+function drawCarChart(principal, goodTotal, yourTotal, goodRate, yourRate) {
+  const { ctx, W, H } = initCanvas('car-chart', 280);
+  const pad = { top: 30, right: 30, bottom: 50, left: 30 };
+  const gW = W - pad.left - pad.right;
+  const gH = H - pad.top - pad.bottom;
+  const goodInt = goodTotal - principal;
+  const yourInt = yourTotal - principal;
+  const maxVal = Math.max(goodTotal, yourTotal) * 1.12;
+  const barW = Math.min(gW * 0.28, 140);
+  const gap = gW * 0.15;
+  const cx = W / 2;
+  // Good credit bar
+  const gx = cx - gap / 2 - barW;
+  const prinH1 = (gH * principal / maxVal);
+  const intH1 = (gH * goodInt / maxVal);
+  ctx.fillStyle = 'rgba(201,162,39,.25)';
+  ctx.beginPath(); ctx.roundRect(gx, pad.top + gH - prinH1 - intH1, barW, prinH1, [6,6,0,0]); ctx.fill();
+  ctx.fillStyle = 'rgba(42,125,79,.7)';
+  ctx.beginPath(); ctx.roundRect(gx, pad.top + gH - prinH1 - intH1, barW, intH1, [6,6,0,0]); ctx.fill();
+  ctx.fillStyle = 'rgba(201,162,39,.4)';
+  ctx.fillRect(gx, pad.top + gH - prinH1, barW, prinH1);
+  // Your credit bar
+  const yx = cx + gap / 2;
+  const prinH2 = (gH * principal / maxVal);
+  const intH2 = (gH * yourInt / maxVal);
+  ctx.fillStyle = 'rgba(192,57,43,.2)';
+  ctx.beginPath(); ctx.roundRect(yx, pad.top + gH - prinH2 - intH2, barW, intH2, [6,6,0,0]); ctx.fill();
+  ctx.fillStyle = 'rgba(192,57,43,.7)';
+  ctx.beginPath(); ctx.roundRect(yx, pad.top + gH - prinH2 - intH2, barW, intH2, [6,6,0,0]); ctx.fill();
+  ctx.fillStyle = 'rgba(201,162,39,.4)';
+  ctx.fillRect(yx, pad.top + gH - prinH2, barW, prinH2);
+  // Labels
+  ctx.fillStyle = '#8A857D'; ctx.font = '600 12px Manrope,sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText('Good Credit (' + goodRate + '%)', gx + barW / 2, H - 12);
+  ctx.fillText('Your Credit (' + yourRate + '%)', yx + barW / 2, H - 12);
+  // Value labels on bars
+  ctx.fillStyle = '#fff'; ctx.font = '700 13px Manrope,sans-serif';
+  if (intH1 > 28) ctx.fillText(fmt(goodInt), gx + barW / 2, pad.top + gH - prinH1 - intH1 / 2 + 5);
+  if (intH2 > 28) ctx.fillText(fmt(yourInt), yx + barW / 2, pad.top + gH - prinH2 - intH2 / 2 + 5);
+  // Principal labels
+  ctx.fillStyle = '#27133B'; ctx.font = '600 11px Manrope,sans-serif';
+  if (prinH1 > 20) ctx.fillText(fmt(principal), gx + barW / 2, pad.top + gH - prinH1 / 2 + 4);
+  // Top total labels
+  ctx.fillStyle = '#2A7D4F'; ctx.font = '700 14px Manrope,sans-serif';
+  ctx.fillText(fmt(goodTotal), gx + barW / 2, pad.top + gH - prinH1 - intH1 - 10);
+  ctx.fillStyle = '#C0392B';
+  ctx.fillText(fmt(yourTotal), yx + barW / 2, pad.top + gH - prinH2 - intH2 - 10);
+}
+
+// ============================================================
+// MORTGAGE — line chart showing remaining balance over time
+// ============================================================
+function drawMortChart(principal, goodRate, yourRate, years) {
+  const { ctx, W, H } = initCanvas('mort-chart', 280);
+  const pad = { top: 24, right: 20, bottom: 40, left: 70 };
+  const gW = W - pad.left - pad.right;
+  const gH = H - pad.top - pad.bottom;
+  const goodMo = pmt(principal, goodRate, years * 12);
+  const yourMo = pmt(principal, yourRate, years * 12);
+  const grM = goodRate / 100 / 12;
+  const yrM = yourRate / 100 / 12;
+  const goodData = [], yourData = [], labels = [];
+  let gBal = principal, yBal = principal;
+  goodData.push(principal); yourData.push(principal); labels.push(0);
+  for (let y = 1; y <= years; y++) {
+    for (let m = 0; m < 12; m++) {
+      gBal = Math.max(0, gBal * (1 + grM) - goodMo);
+      yBal = Math.max(0, yBal * (1 + yrM) - yourMo);
+    }
+    goodData.push(gBal); yourData.push(yBal); labels.push(y);
+  }
+  const maxVal = principal * 1.05;
+  drawGrid(ctx, pad, W, H, maxVal, 5);
+  // X labels
+  ctx.fillStyle = '#8A857D'; ctx.font = '11px Manrope,sans-serif'; ctx.textAlign = 'center';
+  const step = Math.max(1, Math.floor(labels.length / 6));
+  for (let i = 0; i < labels.length; i += step) {
+    const x = pad.left + (gW * i / (labels.length - 1));
+    ctx.fillText('Yr ' + labels[i], x, H - 10);
+  }
+  // Fills
+  drawFill(ctx, goodData, pad, gW, gH, maxVal, 'rgba(42,125,79,.08)');
+  drawFill(ctx, yourData, pad, gW, gH, maxVal, 'rgba(192,57,43,.08)');
+  // Lines
+  drawLine(ctx, goodData, pad, gW, gH, maxVal, '#2A7D4F', 2.5);
+  drawLine(ctx, yourData, pad, gW, gH, maxVal, '#C0392B', 2.5);
+}
+
+// ============================================================
+// CREDIT CARD — line chart showing balance over time
+// ============================================================
+function drawCreditChart(dataMin, dataFix) {
+  const { ctx, W, H } = initCanvas('cc-chart', 280);
+  const pad = { top: 24, right: 20, bottom: 40, left: 70 };
+  const gW = W - pad.left - pad.right;
+  const gH = H - pad.top - pad.bottom;
+  const maxVal = Math.max(dataMin[0], dataFix[0]) * 1.1;
+  const maxLen = Math.max(dataMin.length, dataFix.length);
+  drawGrid(ctx, pad, W, H, maxVal, 5);
+  // X labels in months
+  ctx.fillStyle = '#8A857D'; ctx.font = '11px Manrope,sans-serif'; ctx.textAlign = 'center';
+  const step = Math.max(1, Math.floor(maxLen / 6));
+  for (let i = 0; i < maxLen; i += step) {
+    const x = pad.left + (gW * i / (maxLen - 1));
+    ctx.fillText('Mo ' + (i + 1), x, H - 10);
+  }
+  // Pad shorter array so both draw on same x scale
+  function padArr(arr, len) { const a = [...arr]; while (a.length < len) a.push(0); return a; }
+  const minPad = padArr(dataMin, maxLen);
+  const fixPad = padArr(dataFix, maxLen);
+  // Fills
+  drawFill(ctx, minPad, pad, gW, gH, maxVal, 'rgba(192,57,43,.08)');
+  drawFill(ctx, fixPad, pad, gW, gH, maxVal, 'rgba(42,125,79,.08)');
+  // Lines
+  drawLine(ctx, minPad, pad, gW, gH, maxVal, '#C0392B', 2.5);
+  drawLine(ctx, fixPad, pad, gW, gH, maxVal, '#2A7D4F', 2.5);
+}
+
+// ============================================================
+// CAR LOAN CALCULATOR
+// ============================================================
+function calcCar() {
+  const price = +document.getElementById('car-price').value;
+  const down = +document.getElementById('car-down').value;
+  const years = +document.getElementById('car-term').value;
+  const credit = document.getElementById('car-credit').value;
+  const principal = price - down;
+  const months = years * 12;
+  const goodRate = carRates.excellent;
+  const yourRate = carRates[credit];
+  const goodMo = pmt(principal, goodRate, months);
+  const yourMo = pmt(principal, yourRate, months);
+  const goodTotal = goodMo * months;
+  const yourTotal = yourMo * months;
+  document.getElementById('car-good-total').textContent = fmt(goodTotal);
+  document.getElementById('car-good-mo').textContent = fmt(goodMo);
+  document.getElementById('car-good-rate').textContent = goodRate;
+  document.getElementById('car-your-total').textContent = fmt(yourTotal);
+  document.getElementById('car-your-mo').textContent = fmt(yourMo);
+  document.getElementById('car-your-rate').textContent = yourRate;
+  document.getElementById('car-diff').textContent = fmt(yourTotal - goodTotal);
+  document.getElementById('car-results').classList.add('show');
+  setTimeout(() => drawCarChart(principal, goodTotal, yourTotal, goodRate, yourRate), 50);
+}
+
+// ============================================================
+// MORTGAGE CALCULATOR
+// ============================================================
+function calcMortgage() {
+  const price = +document.getElementById('mort-price').value;
+  const down = +document.getElementById('mort-down').value;
+  const years = +document.getElementById('mort-term').value;
+  const credit = document.getElementById('mort-credit').value;
+  const principal = price - down;
+  const months = years * 12;
+  const goodRate = mortRates.excellent;
+  const yourRate = mortRates[credit];
+  const goodMo = pmt(principal, goodRate, months);
+  const yourMo = pmt(principal, yourRate, months);
+  const goodTotal = goodMo * months;
+  const yourTotal = yourMo * months;
+  document.getElementById('mort-good-total').textContent = fmt(goodTotal);
+  document.getElementById('mort-good-mo').textContent = fmt(goodMo);
+  document.getElementById('mort-good-rate').textContent = goodRate;
+  document.getElementById('mort-your-total').textContent = fmt(yourTotal);
+  document.getElementById('mort-your-mo').textContent = fmt(yourMo);
+  document.getElementById('mort-your-rate').textContent = yourRate;
+  document.getElementById('mort-diff').textContent = fmt(yourTotal - goodTotal);
+  // Amortization table
+  const tbody = document.querySelector('#mort-table tbody');
+  tbody.innerHTML = '';
+  let balance = principal;
+  const mr = yourRate / 100 / 12;
+  for (let y = 1; y <= years; y++) {
+    let yearInt = 0, yearPrin = 0;
+    for (let m = 0; m < 12; m++) {
+      const interest = balance * mr;
+      const prinPay = yourMo - interest;
+      yearInt += interest;
+      yearPrin += prinPay;
+      balance -= prinPay;
+    }
+    if (balance < 0) balance = 0;
+    const row = document.createElement('tr');
+    row.innerHTML = '<td>'+y+'</td><td>'+fmt(yourMo)+'</td><td>'+fmt(yearInt)+'</td><td>'+fmt(yearPrin)+'</td><td>'+fmt(balance)+'</td>';
+    tbody.appendChild(row);
+  }
+  document.getElementById('mort-results').classList.add('show');
+  setTimeout(() => drawMortChart(principal, goodRate, yourRate, years), 50);
+}
+
+// ============================================================
+// CREDIT CARD CALCULATOR
+// ============================================================
+function calcCredit() {
+  const balance = +document.getElementById('cc-balance').value;
+  const apr = +document.getElementById('cc-apr').value;
+  const minPct = +document.getElementById('cc-minpct').value / 100;
+  let fixedPay = +document.getElementById('cc-fixed').value;
+  const mr = apr / 100 / 12;
+  const minFloor = 25;
+  // Minimum payments — track balance each month for chart
+  let bal = balance, totalPaid = 0, mos = 0;
+  const minBalances = [balance];
+  while (bal > 0.5 && mos < 600) {
+    const interest = bal * mr;
+    const payment = Math.max(bal * minPct, minFloor);
+    const actual = Math.min(payment, bal + interest);
+    bal = bal + interest - actual;
+    totalPaid += actual;
+    mos++;
+    minBalances.push(Math.max(0, bal));
+  }
+  const minTotal = totalPaid, minMonths = mos;
+  // Fixed payments — track balance each month for chart
+  if (fixedPay <= 0) fixedPay = Math.max(balance * minPct, minFloor) * 2;
+  bal = balance; totalPaid = 0; mos = 0;
+  const fixBalances = [balance];
+  while (bal > 0.5 && mos < 600) {
+    const interest = bal * mr;
+    const actual = Math.min(fixedPay, bal + interest);
+    bal = bal + interest - actual;
+    totalPaid += actual;
+    mos++;
+    fixBalances.push(Math.max(0, bal));
+  }
+  const fixTotal = totalPaid, fixMonths = mos;
+  document.getElementById('cc-min-total').textContent = fmt(minTotal);
+  document.getElementById('cc-min-months').textContent = minMonths;
+  document.getElementById('cc-fix-total').textContent = fmt(fixTotal);
+  document.getElementById('cc-fix-months').textContent = fixMonths;
+  document.getElementById('cc-savings').textContent = fmt(minTotal - fixTotal);
+  document.getElementById('cc-results').classList.add('show');
+  setTimeout(() => drawCreditChart(minBalances, fixBalances), 50);
+}
+
+// ============================================================
+// RETIREMENT CALCULATOR
+// ============================================================
+function calcRetire() {
+  const monthly = +document.getElementById('ret-monthly').value;
+  const age = +document.getElementById('ret-age').value;
+  const retireAge = +document.getElementById('ret-retire').value;
+  const annualReturn = +document.getElementById('ret-return').value;
+  const mr = annualReturn / 100 / 12;
+  // Start now
+  const yearsNow = retireAge - age;
+  const monthsNow = yearsNow * 12;
+  let balNow = 0;
+  const dataNow = [];
+  for (let m = 1; m <= monthsNow; m++) {
+    balNow = balNow * (1 + mr) + monthly;
+    if (m % 12 === 0) dataNow.push({ year: m / 12, balance: balNow, contrib: monthly * m });
+  }
+  const contribNow = monthly * monthsNow;
+  // Wait 10 years
+  const yearsLate = Math.max(retireAge - (age + 10), 0);
+  const monthsLate = yearsLate * 12;
+  let balLate = 0;
+  for (let m = 1; m <= monthsLate; m++) { balLate = balLate * (1 + mr) + monthly; }
+  const contribLate = monthly * monthsLate;
+
+  document.getElementById('ret-now-total').textContent = fmt(balNow);
+  document.getElementById('ret-now-contrib').textContent = fmt(contribNow);
+  document.getElementById('ret-late-total').textContent = fmt(balLate);
+  document.getElementById('ret-late-contrib').textContent = fmt(contribLate);
+  document.getElementById('ret-diff').textContent = fmt(balNow - balLate);
+  document.getElementById('ret-results').classList.add('show');
+  setTimeout(() => drawRetireChart(dataNow), 50);
+}
+
+function drawRetireChart(data) {
+  const { ctx, W, H } = initCanvas('ret-chart', 280);
+  const pad = { top: 24, right: 20, bottom: 40, left: 70 };
+  const gW = W - pad.left - pad.right;
+  const gH = H - pad.top - pad.bottom;
+  if (!data.length) return;
+  const maxVal = Math.max(...data.map(d => d.balance)) * 1.1;
+  drawGrid(ctx, pad, W, H, maxVal, 5);
+  // X labels
+  ctx.fillStyle = '#8A857D'; ctx.font = '11px Manrope,sans-serif'; ctx.textAlign = 'center';
+  const step = Math.max(1, Math.floor(data.length / 6));
+  for (let i = 0; i < data.length; i += step) {
+    const x = pad.left + (gW * i / (data.length - 1));
+    ctx.fillText('Yr ' + data[i].year, x, H - 10);
+  }
+  // Contributions
+  const contribVals = data.map(d => d.contrib);
+  const balVals = data.map(d => d.balance);
+  drawFill(ctx, contribVals, pad, gW, gH, maxVal, 'rgba(201,162,39,.15)');
+  drawLine(ctx, contribVals, pad, gW, gH, maxVal, '#C9A227', 2.5);
+  drawFill(ctx, balVals, pad, gW, gH, maxVal, 'rgba(42,125,79,.1)');
+  drawLine(ctx, balVals, pad, gW, gH, maxVal, '#2A7D4F', 2.5);
+}
+
+// Auto-calculate car on load
+window.addEventListener('load', () => { calcCar(); });
+</script>
+</body>
+</html>
